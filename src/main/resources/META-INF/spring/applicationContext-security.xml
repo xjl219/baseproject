@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans   
+            http://www.springframework.org/schema/beans/spring-beans-3.2.xsd  
+            http://www.springframework.org/schema/security   
+            http://www.springframework.org/schema/security/spring-security-3.2.xsd">
+	<security:http pattern="/css/**" security="none" />
+	<security:http pattern="/js/**" security="none" />
+	<security:http pattern="/images/**" security="none" />
+
+	<security:http auto-config="false" use-expressions="true"
+		access-denied-page="/denied">
+		<security:form-login login-page="/login"
+			authentication-failure-url="/login?error=true" default-target-url="/home" />
+
+		<security:logout invalidate-session="true"
+			logout-success-url="/login" logout-url="/logout" delete-cookies="JSESSIONID" />
+		<security:custom-filter ref="securityInterceptor"
+			before="FILTER_SECURITY_INTERCEPTOR" />
+	</security:http>
+
+
+	<security:authentication-manager alias="myAuthenticationManager">
+		<security:authentication-provider
+			user-service-ref="customUserDetailsService">
+			<!-- <security:user-service> 以硬编码的方式配置认证用户密码。 authorities：表示此用户的相应的权限，默认以ROLE_**形式 
+				<security:user name="MrChao" password="123" authorities="ROLE_admin"/> </security:user-service> -->
+			<security:password-encoder ref="Md5Encoder">
+				<security:salt-source system-wide="newtouch" />
+			</security:password-encoder>
+		</security:authentication-provider>
+	</security:authentication-manager>
+
+	<bean
+		class="org.springframework.security.authentication.encoding.Md5PasswordEncoder"
+		id="Md5Encoder" />
+
+
+</beans>

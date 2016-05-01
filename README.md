@@ -1,6 +1,6 @@
 **This project is obsolete!**
 
-Please refer https://github.com/terasolunaorg/terasoluna-gfw-web-blank
+Please refer https://github.com/xjl219/baseproject
 
 
 ----
@@ -30,5 +30,5 @@ $ mvn clean eclipse:clean eclipse:eclipse -P hsqldb
 tested only on Tomcat7 (not use JTA)
 
 $ mvn clean tomcat7:run -P h2
-access http://localhost:8080/springmvc-jpa-blank
+
 
